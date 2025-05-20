@@ -30,13 +30,13 @@ namespace phat {
 
     public:
         template< typename Representation >
-        void operator() ( boundary_matrix< Representation >& boundary_matrix ) {
+        inline void operator() ( boundary_matrix< Representation >& boundary_matrix ) {
 
 
             const index nr_columns = boundary_matrix.get_num_cols();
             if( omp_get_max_threads( ) > nr_columns )
                 omp_set_num_threads( 1 );
-                
+
             const dimension max_dim = boundary_matrix.get_max_dim();
 
             std::vector< index > lowest_one_lookup( nr_columns, -1 );
@@ -80,7 +80,7 @@ namespace phat {
 
             // Phase 2+3: Simplify columns and reduce them
             for( dimension cur_dim = max_dim; cur_dim >= 1; cur_dim-- ) {
-                // Phase 2: Simplify columns 
+                // Phase 2: Simplify columns
                 std::vector< index > temp_col;
                 #pragma omp parallel for schedule( guided, 1 ), private( temp_col )
                 for( index idx = 0; idx < (index)global_columns.size(); idx++ )
@@ -108,7 +108,7 @@ namespace phat {
 
             boundary_matrix.sync();
         }
-    
+
     protected:
         template< typename Representation >
         void _local_chunk_reduction( boundary_matrix< Representation >& boundary_matrix
@@ -143,7 +143,7 @@ namespace phat {
                                 , const std::vector< column_type >& column_type
                                 , const std::vector< index >& global_columns
                                 , std::vector< char >& is_active ) {
-            
+
             const index nr_columns = boundary_matrix.get_num_cols();
             std::vector< char > finished( nr_columns, false );
 
@@ -188,14 +188,14 @@ namespace phat {
                 }
             }
         }
-        
+
         template< typename Representation >
         void _global_column_simplification( const index col_idx
                                           , boundary_matrix< Representation >& boundary_matrix
                                           , const std::vector< index >& lowest_one_lookup
                                           , const std::vector< column_type >& column_type
                                           , const std::vector< char >& is_active
-                                          , std::vector< index >& temp_col ) 
+                                          , std::vector< index >& temp_col )
         {
             temp_col.clear();
             while( !boundary_matrix.is_empty( col_idx ) ) {
