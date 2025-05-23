@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 2.8)
+cmake_minimum_required(VERSION 3.10)
 
 project("Phat")
 
@@ -31,14 +31,14 @@ set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}
 else()
 message("
 
-OpenMP 3.0 not supported by the compiler (${CMAKE_CXX_COMPILER})! 
+OpenMP 3.0 not supported by the compiler (${CMAKE_CXX_COMPILER})!
 To get optimal performance for the \"chunk\" algorithm, use a C++ compiler with OpenMP 3.0 support (e.g., GCC >=4.4).
-To use a different compiler, pass it to cmake in the variable CMAKE_CXX_COMPILER: 
+To use a different compiler, pass it to cmake in the variable CMAKE_CXX_COMPILER:
  cmake . -DCMAKE_CXX_COMPILER=g++-4.7
 
 ")
 endif()
- 
+
 FILE(GLOB_RECURSE all_headers "include/phat/*.h")
 
 FILE(GLOB general_includes "include/phat/*.h")
